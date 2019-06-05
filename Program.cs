@@ -13,8 +13,10 @@ namespace consolepirates
 {
     public class Program
     {
+        public static Random rand;
         public static Game newGame;
         public static Location world;
+        // public static List<ILootable> availableLoot; 
         public static void Main(string[] args)
         {
             // CreateWebHostBuilder(args).Build().Run();
@@ -23,6 +25,11 @@ namespace consolepirates
         }
         public static void CreateGame()
         {   
+            // availableLoot = new List<ILootable>(){
+            //     Fern(1),
+            //     new Orchid(1),
+            // };
+            Program.rand = new Random();
             System.Console.Write( @"
             ############################################################
             #                                                          #

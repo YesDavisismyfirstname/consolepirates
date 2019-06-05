@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System;
 namespace consolepirates.Models
 {
-    Random rand = new Random();
+    
     public class EnemySkipper : Skipper
     {
-        public EnemySkipper()
+        public EnemySkipper(string name) : base (name)
         {
-            cannons = rand.Next(1,3);
-            currentCargo = List<ILootable>(rand.Next(0,7)); //Is this correct? How would I do multiple items in cargo?
+            cannons = Program.rand.Next(1,3);
+            currentCargo = new List<ILootable>();
+            randomInventory();
+             //Is this correct? How would I do multiple items in cargo?
         }
     }
     public class EnemyHauler : Hauler

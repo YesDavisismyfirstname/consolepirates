@@ -22,15 +22,15 @@ namespace consolepirates.Models
     }
     public class Fern: Loot
     {
-        public Fern(int AmmountInStore, double storeSellMultiplier, double storeBuyMultiplier)
+        public Fern(int ammount)
         {
             name = "Fern";
             description = @"A very common plant located across the world,
             who knows why they're even worth anything.";
             baseCost = 10;
             StockMultiplier = .02;
-            StoreStock = AmmountInStore;
-            DisplayCost = (int)(AmmountInStore * storeSellMultiplier);
+            this.ammount = ammount;
+            // DisplayCost = (int)(AmmountInStore * storeSellMultiplier);
         }
     }
     public class Orchid: Loot

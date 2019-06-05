@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 namespace consolepirates.Models
 {
     abstract public class Ship
@@ -14,8 +15,12 @@ namespace consolepirates.Models
         public int maxHullHealth;
         public List<ILootable> currentCargo;
         public string shipArt = "";
+        
         public void displayShip(string ship){
             System.Console.Write(shipArt);
+        }
+        public void randomEquipment(int mincan, int minsailor,int minhp, int mincargo){
+            cannons = Program.rand.Next(mincan,cannonCapacity+1);
         }
     }
 
