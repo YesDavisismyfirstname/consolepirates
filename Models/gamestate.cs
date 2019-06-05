@@ -4,6 +4,11 @@ namespace consolepirates.Models
     public class Game
     {
         public Player newPlayer;
+        
+        public Game(string newname , string startingship)
+        {
+            newPlayer = new Player(newname,startingship);
+        }
 
     }
     public interface IEventable
