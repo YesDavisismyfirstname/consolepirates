@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 namespace consolepirates.Models
 {
     public class Game
@@ -38,8 +39,27 @@ namespace consolepirates.Models
         }
         public Action(object selection) {
             Loot option = (Loot)selection;
+            int purchaseamt = 0;
             System.Console.WriteLine("Input how many you would like to buy?");
-            int qty = System.Console.ReadLine(int integer);
+            string qty = System.Console.ReadLine();
+            if (Int32.TryParse(qty, out int numValue))
+            {
+            purchaseamt = numValue;
+            int currentload = Program.newGame.newPlayer.currentShip.currentCargo.Count;
+            int spaceAvailable = Program.newGame.newPlayer.currentShip.cargoSpace - currentload;
+            if(purchaseamt < spaceAvailable*option.inventorySpace){
+                while(purchaseamt >0) {
+                    if(purchaseamt > option.inventorySpace)
+                    Program.newGame.newPlayer.currentShip.currentCargo.Add(option)
+                }
+            }
+            }
+            else
+            {
+            Console.WriteLine($"Thats not a valid ammount try again");
+            Program.newGame.newPlayer.currentLocation.displayInfo();
+            }
+
         }
         
     }

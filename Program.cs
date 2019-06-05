@@ -63,7 +63,7 @@ namespace consolepirates
             ############################################################
             ");
             newGame = new Game(name,shipname);
-            newGame.Action("travel","Tortuga");
+            newGame.newPlayer.currentLocation.displayInfo();
         }
     
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
