@@ -32,10 +32,14 @@ namespace consolepirates.Models
     }
     public class Purchase : Action
     {
-        public Purchase(ILootable item, int quantity){
+        public Purchase(){
             name = "purchase";
-            description = "Purchase items from a store"
-            Program.newGame.newPlayer.currentShip.currentCargo.Add()
+            description = "Purchase items from a store";
+        }
+        public Action(object selection) {
+            Loot option = (Loot)selection;
+            System.Console.WriteLine("Input how many you would like to buy?");
+            int qty = System.Console.ReadLine(int integer);
         }
         
     }
