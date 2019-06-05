@@ -22,13 +22,20 @@ namespace consolepirates.Models
 
     public class QuestList
     {
-        public List<Quest> availableQuests;
+        public List<Quest> allQuests;
+        public Quest availableQuest;
         public QuestList()
         {
-            availableQuests = new List<Quest>()
+            allQuests = new List<Quest>()
             {
-            
+                
             };
+            availableQuest = questRandomizer();
+        }
+        public Quest questRandomizer()
+        {
+            Random num = new Random();
+            return allQuests[num.Next(5)];
         }
     }
 
