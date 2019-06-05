@@ -10,7 +10,7 @@ namespace consolepirates.Models
             cannons = Program.rand.Next(1,3);
             currentCargo = new List<ILootable>();
             randomInventory();
-             //Is this correct? How would I do multiple items in cargo?
+            
         }
     }
     public class EnemyHauler : Hauler
@@ -18,7 +18,8 @@ namespace consolepirates.Models
         public EnemyHauler()
         {
             cannons = rand.Next(2,4);
-            currentCargo = List<ILootable>(rand.Next(0,7));
+            currentCargo = new List<ILootable>();
+            randomInventory();
         }
     }
     public class EnemyFighter : Fighter
@@ -26,7 +27,8 @@ namespace consolepirates.Models
         public EnemyFighter()
         {
             cannons = rand.Next(3,6);
-            currentCargo = List<ILootable>(rand.Next(0,7));
+            currentCargo = new List<ILootable>();
+            randomInventory();
         }
     }
     public class EnemyNautilous : Nautilous
@@ -34,7 +36,8 @@ namespace consolepirates.Models
         public EnemyNautilous()
         {
             cannons = rand.Next(8,12);
-            currentCargo = List<ILootable>(rand.Next(0,7));
+            currentCargo = new List<ILootable>();
+            randomInventory();
         }
     }
 }
