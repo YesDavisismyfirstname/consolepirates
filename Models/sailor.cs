@@ -5,6 +5,7 @@ namespace consolepirates.Models
     {
         public string name;
         public Ship currentShip;
+        public Location currentLocation;
         public int gold;
         public int travelDays;
 
@@ -12,16 +13,11 @@ namespace consolepirates.Models
         {
             this.name = name;
             currentShip = new Skipper(shipName);
+            currentLocation = Program.world.locations[0];
             gold = 100;
             travelDays = 0;
         }
-        public void PurchaseGoods(ILootable loot, int quantity)
-        {
-            if (gold > (loot.DisplayCost * quantity))
-            {
-                currentShip.currentCargo.Add(loot);
-            }
-        }
+    
     }
 }
 
