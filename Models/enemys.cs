@@ -7,8 +7,7 @@ namespace consolepirates.Models
     {
         public EnemySkipper(string name) : base (name)
         {
-            cannons = Program.rand.Next(1,3);
-            currentCargo = new List<ILootable>();
+            randomEquipment(1,3,8,6);
             randomInventory();
             
         }
@@ -17,8 +16,7 @@ namespace consolepirates.Models
     {
         public EnemyHauler(string name) : base (name)
         {
-            cannons = Program.rand.Next(2,4);
-            currentCargo = new List<ILootable>();
+            randomEquipment(1,10,20,15);
             randomInventory();
         }
     }
@@ -26,8 +24,7 @@ namespace consolepirates.Models
     {
         public EnemyFighter(string name) : base (name)
         {
-            cannons = Program.rand.Next(3,6);
-            currentCargo = new List<ILootable>();
+            randomEquipment(3,6,15,8);
             randomInventory();
         }
     }
@@ -35,8 +32,7 @@ namespace consolepirates.Models
     {
         public EnemyNautilous(string name) : base (name)
         {
-            cannons = Program.rand.Next(8,12);
-            currentCargo = new List<ILootable>();
+            randomEquipment(5,25,75,25);
             randomInventory();
         }
     }
