@@ -30,3 +30,11 @@ C:\Users\LT-FAMSQUAD\Documents\Code\CSharp\aspCore\consolepirates\obj\Debug\netc
 C:\Users\LT-FAMSQUAD\Documents\Code\CSharp\aspCore\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.dll
 C:\Users\LT-FAMSQUAD\Documents\Code\CSharp\aspCore\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.pdb
 C:\Users\LT-FAMSQUAD\Documents\Code\CSharp\aspCore\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.csproj.CopyComplete
+C:\coding_dojo\C#\hackathon\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.csprojAssemblyReference.cache
+C:\coding_dojo\C#\hackathon\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.csproj.CoreCompileInputs.cache
+C:\coding_dojo\C#\hackathon\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.RazorAssemblyInfo.cache
+C:\coding_dojo\C#\hackathon\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.RazorAssemblyInfo.cs
+C:\coding_dojo\C#\hackathon\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.AssemblyInfoInputs.cache
+C:\coding_dojo\C#\hackathon\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.AssemblyInfo.cs
+C:\coding_dojo\C#\hackathon\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.dll
+C:\coding_dojo\C#\hackathon\consolepirates\obj\Debug\netcoreapp2.1\consolepirates.pdb
