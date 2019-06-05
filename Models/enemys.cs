@@ -1,37 +1,43 @@
 using System.Collections.Generic;
+using System;
 namespace consolepirates.Models
 {
-    Random rand = new Random();
+    
     public class EnemySkipper : Skipper
     {
-        public EnemySkipper()
+        public EnemySkipper(string name) : base (name)
         {
-            cannons = rand.Next(1,3);
-            currentCargo = List<ILootable>(rand.Next(0,7)); //Is this correct? How would I do multiple items in cargo?
+            cannons = Program.rand.Next(1,3);
+            currentCargo = new List<ILootable>();
+            randomInventory();
+            
         }
     }
     public class EnemyHauler : Hauler
     {
-        public EnemyHauler()
+        public EnemyHauler(string name) : base (name)
         {
-            cannons = rand.Next(2,4);
-            currentCargo = List<ILootable>(rand.Next(0,7));
+            cannons = Program.rand.Next(2,4);
+            currentCargo = new List<ILootable>();
+            randomInventory();
         }
     }
     public class EnemyFighter : Fighter
     {
-        public EnemyFighter()
+        public EnemyFighter(string name) : base (name)
         {
-            cannons = rand.Next(3,6);
-            currentCargo = List<ILootable>(rand.Next(0,7));
+            cannons = Program.rand.Next(3,6);
+            currentCargo = new List<ILootable>();
+            randomInventory();
         }
     }
     public class EnemyNautilous : Nautilous
     {
-        public EnemyNautilous()
+        public EnemyNautilous(string name) : base (name)
         {
-            cannons = rand.Next(8,12);
-            currentCargo = List<ILootable>(rand.Next(0,7));
+            cannons = Program.rand.Next(8,12);
+            currentCargo = new List<ILootable>();
+            randomInventory();
         }
     }
 }

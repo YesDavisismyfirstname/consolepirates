@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 namespace consolepirates.Models
 {
     abstract public class Ship
@@ -14,8 +15,58 @@ namespace consolepirates.Models
         public int maxHullHealth;
         public List<ILootable> currentCargo;
         public string shipArt = "";
+        
         public void displayShip(string ship){
             System.Console.Write(shipArt);
+        }
+        public void randomEquipment(int mincan, int minsailor,int minhp, int mincargo){
+            cannons = Program.rand.Next(mincan,cannonCapacity+1);
+        }
+        public void randomInventory(){
+            int temp = Program.rand.Next(0,cargoSpace);
+            int qty = 0;
+            if(currentCargo.Count < temp) {
+                qty = Program.rand.Next(0,50);
+                if (qty>0) {
+                currentCargo.Add(new Fern(qty));
+                }
+            }
+            if(currentCargo.Count < temp) {
+                qty = Program.rand.Next(0,50);
+                if (qty>0) {
+                currentCargo.Add(new Orchid(qty));
+                }
+            }
+            if(currentCargo.Count < temp) {
+                qty = Program.rand.Next(0,50);
+                if (qty>0) {
+                currentCargo.Add(new Redwood(qty));
+                }
+            }
+            if(currentCargo.Count < temp) {
+                qty = Program.rand.Next(0,50);
+                if (qty>0) {
+                currentCargo.Add(new Sunflower(qty));
+                }
+            }
+            if(currentCargo.Count < temp) {
+                qty = Program.rand.Next(0,50);
+                if (qty>0) {
+                currentCargo.Add(new Cactus(qty));
+                }
+            }
+            if(currentCargo.Count < temp) {
+                qty = Program.rand.Next(0,50);
+                if (qty>0) {
+                currentCargo.Add(new Papaya(qty));
+                }
+            }
+            if(currentCargo.Count < temp) {
+                qty = Program.rand.Next(0,50);
+                if (qty>0) {
+                currentCargo.Add(new Coconut(qty));
+                }
+            }
         }
     }
 
