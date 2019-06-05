@@ -4,22 +4,39 @@ namespace consolepirates.Models
     public class Game
     {
         public Player newPlayer;
-        
-        public Game(string newname , string startingship)
+
+        public Game(string newname, string startingship)
         {
-            newPlayer = new Player(newname,startingship);
+            Program.world = new WorldMap();
+            newPlayer = new Player(newname, startingship);
+            newPlayer.currentLocation.displayInfo();
+
+        }
+        public void Action(string choice)
+        {
+
+            // string choice = 
+            newPlayer.currentLocation.displayInfo();
         }
 
     }
     public interface IEventable
     {
-        List<Action> actions {get;set;}
+        List<Action> actions { get; set; }
     }
-    public class Action
+    public abstract class Action
     {
         public string name;
         public string description;
+
+    }
+    public class Purchase : Action
+    {
+        public Purchase(ILootable item, int quantity){
+            name = "purchase";
+            description = "Purchase items from a store"
+            Program.newGame.newPlayer.currentShip.currentCargo.Add()
+        }
         
     }
-
 }

@@ -13,7 +13,8 @@ namespace consolepirates
 {
     public class Program
     {
-        public Game newGame;
+        public static Game newGame;
+        public static Location world;
         public static void Main(string[] args)
         {
             // CreateWebHostBuilder(args).Build().Run();
@@ -54,14 +55,10 @@ namespace consolepirates
             #                                                          #
             ############################################################
             ");
-            // newGame = new Game(name,shipname);
-            // Action()
+            newGame = new Game(name,shipname);
+            newGame.Action("travel","Tortuga");
         }
-        public void Action(Game currentGame, string choice)
-        {
-            // choice.DisplayInfo();
-            // string choice = 
-        }
+    
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
