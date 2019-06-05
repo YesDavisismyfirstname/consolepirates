@@ -15,27 +15,27 @@ namespace consolepirates.Models
     }
     public class EnemyHauler : Hauler
     {
-        public EnemyHauler()
+        public EnemyHauler(string name) : base (name)
         {
-            cannons = rand.Next(2,4);
+            cannons = Program.rand.Next(2,4);
             currentCargo = new List<ILootable>();
             randomInventory();
         }
     }
     public class EnemyFighter : Fighter
     {
-        public EnemyFighter()
+        public EnemyFighter(string name) : base (name)
         {
-            cannons = rand.Next(3,6);
+            cannons = Program.rand.Next(3,6);
             currentCargo = new List<ILootable>();
             randomInventory();
         }
     }
     public class EnemyNautilous : Nautilous
     {
-        public EnemyNautilous()
+        public EnemyNautilous(string name) : base (name)
         {
-            cannons = rand.Next(8,12);
+            cannons = Program.rand.Next(8,12);
             currentCargo = new List<ILootable>();
             randomInventory();
         }
