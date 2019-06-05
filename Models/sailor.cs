@@ -15,5 +15,14 @@ namespace consolepirates.Models
             gold = 100;
             travelDays = 0;
         }
+        public void PurchaseGoods(ILootable loot, int quantity)
+        {
+            if (gold > (loot.DisplayCost * quantity))
+            {
+                currentShip.currentCargo.Add(loot);
+            }
+        }
     }
 }
+
+
