@@ -26,45 +26,45 @@ namespace consolepirates.Models
             int temp = Program.rand.Next(0,cargoSpace);
             int qty = 0;
             if(currentCargo.Count < temp) {
-                qty = Program.rand.Next(0,50);
+                qty = Program.rand.Next(0,30);
                 if (qty>0) {
                 currentCargo.Add(new Fern(qty));
                 }
             }
             if(currentCargo.Count < temp) {
-                qty = Program.rand.Next(0,50);
+                qty = Program.rand.Next(0,20);
                 if (qty>0) {
                 currentCargo.Add(new Orchid(qty));
                 }
             }
             if(currentCargo.Count < temp) {
-                qty = Program.rand.Next(0,50);
-                if (qty>0) {
-                currentCargo.Add(new Redwood(qty));
-                }
-            }
-            if(currentCargo.Count < temp) {
-                qty = Program.rand.Next(0,50);
+                qty = Program.rand.Next(0,20);
                 if (qty>0) {
                 currentCargo.Add(new Sunflower(qty));
                 }
             }
             if(currentCargo.Count < temp) {
-                qty = Program.rand.Next(0,50);
+                qty = Program.rand.Next(0,15);
                 if (qty>0) {
-                currentCargo.Add(new Cactus(qty));
+                currentCargo.Add(new Coconut(qty));
                 }
             }
             if(currentCargo.Count < temp) {
-                qty = Program.rand.Next(0,50);
+                qty = Program.rand.Next(0,10);
+                if (qty>0) {
+                currentCargo.Add(new Redwood(qty));
+                }
+            }
+            if(currentCargo.Count < temp) {
+                qty = Program.rand.Next(0,10);
                 if (qty>0) {
                 currentCargo.Add(new Papaya(qty));
                 }
             }
             if(currentCargo.Count < temp) {
-                qty = Program.rand.Next(0,50);
+                qty = Program.rand.Next(0,10);
                 if (qty>0) {
-                currentCargo.Add(new Coconut(qty));
+                currentCargo.Add(new Cactus(qty));
                 }
             }
         }
