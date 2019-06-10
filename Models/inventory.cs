@@ -4,334 +4,158 @@ namespace consolepirates.Models
 {
     public interface ILootable
     {
-        string name {get;set;}
-        int DisplayCost {get;set;} 
-        int DisplaySellPrice {get;set;}
-    }
-    abstract public class Loot : ILootable {
-        public string name{get;set;}
-        public string description;
-        public int inventorySpace;
-        public int ammount;
-        protected int baseCost;
-        public int StoreStock;
-        protected double storeSellMultiplier;
-        protected double storeBuyMultiplier;
-        protected double StockMultiplier;
-        public int DisplayCost {get;set;} 
-        public int DisplaySellPrice{get;set;}
+        string name { get; set; }
+        string description { get; set; }
+        int ammount { get; set; }
+        int inventorySpace { get; set; }
 
-        abstract public void buyItem(int quantity);
     }
-    public class Fern: Loot
+    public class Loot : ILootable
     {
-        public Fern(int ammount)
-        {
-            name = "Fern";
-            description = @"A very common plant located across the world,
-            who knows why they're even worth anything.";
-            baseCost = 10;
-            StockMultiplier = .02;
-            this.ammount = ammount;
-            // DisplayCost = (int)(AmmountInStore * storeSellMultiplier);
+        public int id;
+        public string name { get; set; }
+        public string description { get; set; }
+        public int inventorySpace { get; set; }
+        public int ammount { get; set; }
+        public int baseCost {get; set;}
+        public int baseStock;
+        public int rarity;
+        public double storeSellMultiplier;
+        public double storeBuyMultiplier;
+        public float purchasePrice { get; set; }
+        public Loot(string name){
+            this.name = name;
         }
-        public override void buyItem(int quantity){
-            System.Console.WriteLine("Input how many you would like to buy?");
-            string qty = System.Console.ReadLine();
-            int purchaseamt = 0;
-            if (Int32.TryParse(qty, out int numValue))
+        public Loot(int id,string name, string description, int ammount, int rarity, int reqSpace, int baseCost, float price)
+        {
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.ammount = ammount;
+            this.rarity = rarity;
+            this.inventorySpace = reqSpace;
+            this.baseCost = baseCost;
+            this.purchasePrice = price;
+        }
+        public Loot(int id,string name, string description, int ammount, int reqSpace)
+        {
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.ammount = ammount;
+            this.inventorySpace = reqSpace;
+
+        }
+
+        public Loot(int id,string name, string description, int baseCost, int rarity, int reqSpace, int baseStock)
+        {
+            // System.Console.WriteLine($"Creating Loot Item {name} r={rarity}");
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.baseCost = baseCost;
+            this.rarity = rarity;
+            this.baseStock = baseStock;
+            this.inventorySpace = reqSpace;
+            refreshStock();
+        }
+        public void refreshStock()
+        {
+            int instock = Program.rand.Next(0, 4);
+            // System.Console.WriteLine($"Is in stock {instock}");
+            if (instock == 0)
             {
-            purchaseamt = numValue;
-            if(purchaseamt > ammount){
-                System.Console.WriteLine("Thats more than is in the store try again!");
-                Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-            int currentload = Program.newGame.newPlayer.currentShip.currentCargo.Count;
-            int spaceAvailable = Program.newGame.newPlayer.currentShip.cargoSpace - currentload;
-            if(purchaseamt < spaceAvailable*inventorySpace){
-                while(purchaseamt >0) {
-                    if(purchaseamt > inventorySpace)
-                    {
-                    Program.newGame.newPlayer.currentShip.currentCargo.Add(new Fern(inventorySpace));
-                    purchaseamt = purchaseamt - inventorySpace;
-                    } else {
-                        Program.newGame.newPlayer.currentShip.currentCargo.Add(new Fern(purchaseamt));
-                        purchaseamt = purchaseamt - purchaseamt;
-                    }
-                }
+                ammount = 0;
             }
             else
             {
-            Console.WriteLine($"Thats not a valid ammount try again");
-            Program.newGame.newPlayer.currentLocation.displayInfo();
+            ammount = Program.rand.Next(1, baseStock * 4);
+            // System.Console.WriteLine($"{ammount}{name}");
+                        // System.Console.WriteLine(storeBuyMultiplier);
             }
+            int power = (ammount >0) ? ammount: 1;
+            this.storeSellMultiplier = Math.Pow((1-((rarity * rarity * rarity) * .0003)), power);
+            purchasePrice = (float)(storeSellMultiplier * baseCost);
+            this.storeBuyMultiplier = storeSellMultiplier;         
         }
-    }
-    public class Orchid: Loot
-    {
-        public Orchid(int amount)
+        public void buyItem(float price)
         {
-            name = "Orchid";
-            description = @"A good looking plant that enjoys the simplier things
-            in life, like Pina Coladas and its roots in the dirt.";
-            baseCost = 20;
-            StockMultiplier = .02;
-            this.ammount = ammount;
-            //DisplayCost = (int)(AmmountInStore * storeSellMultiplier);
-        }
-        public override void buyItem(int quantity){
-            System.Console.WriteLine("Input how many you would like to buy?");
+            System.Console.WriteLine("Input how many you would like to buy? (or type cancel)");
             string qty = System.Console.ReadLine();
             int purchaseamt = 0;
+            Ship playerShip = Program.newGame.newPlayer.currentShip;
             if (Int32.TryParse(qty, out int numValue))
             {
-            purchaseamt = numValue;
-            if(purchaseamt > ammount){
-                System.Console.WriteLine("Thats more than is in the store try again!");
-                Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-            int currentload = Program.newGame.newPlayer.currentShip.currentCargo.Count;
-            int spaceAvailable = Program.newGame.newPlayer.currentShip.cargoSpace - currentload;
-            if(purchaseamt < spaceAvailable*inventorySpace){
-                while(purchaseamt >0) {
-                    if(purchaseamt > inventorySpace)
-                    {
-                    Program.newGame.newPlayer.currentShip.currentCargo.Add(new Orchid(inventorySpace));
-                    purchaseamt = purchaseamt - inventorySpace;
-                    } else {
-                        Program.newGame.newPlayer.currentShip.currentCargo.Add(new Orchid(purchaseamt));
-                        purchaseamt = purchaseamt - purchaseamt;
-                    }
+                purchaseamt = numValue;
+                float totalPrice = purchaseamt * price;
+                System.Console.WriteLine($"The Total is {totalPrice}, is that ok? y/n");
+                string pending = Console.ReadLine();
+                if(pending == "n"){
+                    return;
                 }
+                if (purchaseamt * price > Program.newGame.newPlayer.gold){
+                    System.Console.WriteLine("You Don't have enough money!");
+                    System.Console.ReadLine();
+                    return;
+                }
+                if (purchaseamt > ammount)
+                {
+                    System.Console.WriteLine("Thats more than is in the store try again!");
+                    buyItem(price);
+                }
+                // System.Console.WriteLine(Program.newGame.newPlayer);
+                int currentload = playerShip.currentSpace ;
+                int spaceAvailable = playerShip.cargoSpace - currentload;
+                if (purchaseamt < spaceAvailable * inventorySpace)
+                {   
+                    this.ammount = ammount - purchaseamt;
+                    playerShip.cargoSpace += (int)Math.Ceiling((decimal)(purchaseamt / inventorySpace));
+                    System.Console.WriteLine(this.id);
+                    System.Console.WriteLine(playerShip.currentCargo[0]);
+                    playerShip.currentCargo[this.id].ammount += purchaseamt;
+                
+            
+        
+                    // while (purchaseamt > 0)
+                    // {
+                    //     if (purchaseamt > inventorySpace)
+                    //     {
+                    //         playerShip.currentCargo.Add(new Loot(name, description, inventorySpace, rarity, inventorySpace, baseCost, price));
+                    //         purchaseamt = purchaseamt - inventorySpace;
+                    //     }
+                    //     else
+                    //     {
+                    //         playerShip.currentCargo.Add(new Loot(name, description, purchaseamt, rarity, inventorySpace, baseCost, price));
+                    //         purchaseamt = purchaseamt - purchaseamt;
+                    //     }
+                    // }
+
+                    System.Console.WriteLine("Thank you for your purchase");
+                    Program.newGame.newPlayer.gold -= totalPrice;
+                    int power = (ammount >0) ? ammount: 1;
+                    this.storeSellMultiplier = Math.Pow((1-((rarity * rarity * rarity) * .0003)), power);
+                    purchasePrice = (float)(storeSellMultiplier * baseCost);
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine($"You Don't have enough room for that");
+                    buyItem(price);
+                }
+            } else if (qty != "cancel"){
+                Console.WriteLine("That isn't a number...");
+                buyItem(price);
+            } else {    
+                return;
             }
-            else
-            {
-            Console.WriteLine($"Thats not a valid ammount try again");
-            Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-        }
+        }    
     }
-    public class Sunflower: Loot
+    public class QI : Loot
     {
-        public Sunflower(int ammount)
+        public QI(string name) : base(name)
         {
-            name = "Sunflower";
-            description = @"A shining plant that will help you
-            defend your lawn from unwanted guests.";
-            baseCost = 30;
-            StockMultiplier = .02;
-            this.ammount = ammount;
-            //DisplayCost = (int)(AmmountInStore * storeSellMultiplier);
-        }
-        public override void buyItem(int quantity){
-            System.Console.WriteLine("Input how many you would like to buy?");
-            string qty = System.Console.ReadLine();
-            int purchaseamt = 0;
-            if (Int32.TryParse(qty, out int numValue))
-            {
-            purchaseamt = numValue;
-            if(purchaseamt > ammount){
-                System.Console.WriteLine("Thats more than is in the store try again!");
-                Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-            int currentload = Program.newGame.newPlayer.currentShip.currentCargo.Count;
-            int spaceAvailable = Program.newGame.newPlayer.currentShip.cargoSpace - currentload;
-            if(purchaseamt < spaceAvailable*inventorySpace){
-                while(purchaseamt >0) {
-                    if(purchaseamt > inventorySpace)
-                    {
-                    Program.newGame.newPlayer.currentShip.currentCargo.Add(new Sunflower(inventorySpace));
-                    purchaseamt = purchaseamt - inventorySpace;
-                    } else {
-                        Program.newGame.newPlayer.currentShip.currentCargo.Add(new Sunflower(purchaseamt));
-                        purchaseamt = purchaseamt - purchaseamt;
-                    }
-                }
-            }
-            else
-            {
-            Console.WriteLine($"Thats not a valid ammount try again");
-            Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-        }
-    }
-    public class Coconut: Loot
-    {
-        public Coconut(int ammount)
-        {
-            name = "Coconut";
-            description = @"Not actually a nut, technically it's a drupe
-            which is a fruit with fleshiness on the middle and 
-            a hard shell on the outside, but you already knew that.";
-            baseCost = 40;
-            StockMultiplier = .02;
-            this.ammount = ammount;
-            //DisplayCost = (int)(AmmountInStore * storeSellMultiplier);
-        }
-        public override void buyItem(int quantity){
-            System.Console.WriteLine("Input how many you would like to buy?");
-            string qty = System.Console.ReadLine();
-            int purchaseamt = 0;
-            if (Int32.TryParse(qty, out int numValue))
-            {
-            purchaseamt = numValue;
-            if(purchaseamt > ammount){
-                System.Console.WriteLine("Thats more than is in the store try again!");
-                Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-            int currentload = Program.newGame.newPlayer.currentShip.currentCargo.Count;
-            int spaceAvailable = Program.newGame.newPlayer.currentShip.cargoSpace - currentload;
-            if(purchaseamt < spaceAvailable*inventorySpace){
-                while(purchaseamt >0) {
-                    if(purchaseamt > inventorySpace)
-                    {
-                    Program.newGame.newPlayer.currentShip.currentCargo.Add(new Coconut(inventorySpace));
-                    purchaseamt = purchaseamt - inventorySpace;
-                    } else {
-                        Program.newGame.newPlayer.currentShip.currentCargo.Add(new Coconut(purchaseamt));
-                        purchaseamt = purchaseamt - purchaseamt;
-                    }
-                }
-            }
-            else
-            {
-            Console.WriteLine($"Thats not a valid ammount try again");
-            Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-        }
-    }
-    public class Redwood: Loot
-    {
-        public Redwood(int ammount)
-        {
-            name = "Redwood";
-            description = @"Tallest Species of tree in the world. 
-            It Grows in California so there is some confusion as 
-            to how it became available in Carribean markets";
-            baseCost = 50;
-            StockMultiplier = .02;
-            this.ammount = ammount;
-            //DisplayCost = (int)(AmmountInStore * storeSellMultiplier);
-        }
-        public override void buyItem(int quantity){
-            System.Console.WriteLine("Input how many you would like to buy?");
-            string qty = System.Console.ReadLine();
-            int purchaseamt = 0;
-            if (Int32.TryParse(qty, out int numValue))
-            {
-            purchaseamt = numValue;
-            if(purchaseamt > ammount){
-                System.Console.WriteLine("Thats more than is in the store try again!");
-                Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-            int currentload = Program.newGame.newPlayer.currentShip.currentCargo.Count;
-            int spaceAvailable = Program.newGame.newPlayer.currentShip.cargoSpace - currentload;
-            if(purchaseamt < spaceAvailable*inventorySpace){
-                while(purchaseamt >0) {
-                    if(purchaseamt > inventorySpace)
-                    {
-                    Program.newGame.newPlayer.currentShip.currentCargo.Add(new Redwood(inventorySpace));
-                    purchaseamt = purchaseamt - inventorySpace;
-                    } else {
-                        Program.newGame.newPlayer.currentShip.currentCargo.Add(new Redwood(purchaseamt));
-                        purchaseamt = purchaseamt - purchaseamt;
-                    }
-                }
-            }
-            else
-            {
-            Console.WriteLine($"Thats not a valid ammount try again");
-            Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-        }
-    }
-    public class Papaya: Loot
-    {
-        public Papaya(int ammount)
-        {
-            name = "Papaya";
-            description = @"A very healthy plant that most moms would
-            advise you to eat, but you're still not going too.";
-            baseCost = 75;
-            StockMultiplier = .02;
-            this.ammount = ammount;
-            //DisplayCost = (int)(AmmountInStore * storeSellMultiplier);
-        }
-        public override void buyItem(int quantity){
-            System.Console.WriteLine("Input how many you would like to buy?");
-            string qty = System.Console.ReadLine();
-            int purchaseamt = 0;
-            if (Int32.TryParse(qty, out int numValue))
-            {
-            purchaseamt = numValue;
-            if(purchaseamt > ammount){
-                System.Console.WriteLine("Thats more than is in the store try again!");
-                Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-            int currentload = Program.newGame.newPlayer.currentShip.currentCargo.Count;
-            int spaceAvailable = Program.newGame.newPlayer.currentShip.cargoSpace - currentload;
-            if(purchaseamt < spaceAvailable*inventorySpace){
-                while(purchaseamt >0) {
-                    if(purchaseamt > inventorySpace)
-                    {
-                    Program.newGame.newPlayer.currentShip.currentCargo.Add(new Papaya(inventorySpace));
-                    purchaseamt = purchaseamt - inventorySpace;
-                    } else {
-                        Program.newGame.newPlayer.currentShip.currentCargo.Add(new Papaya(purchaseamt));
-                        purchaseamt = purchaseamt - purchaseamt;
-                    }
-                }
-            }
-            else
-            {
-            Console.WriteLine($"Thats not a valid ammount try again");
-            Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-        }
-    }
-    
-    public class Cactus: Loot
-    {
-        public Cactus(int ammount)
-        {
-            name = "Golf Ball Cactus";
-            description = @"A very rare and endagered plant,
-            its home habitat is the hot desserts of Mexico";
-            baseCost = 100;
-            StockMultiplier = .02;
-            this.ammount = ammount;
-            //DisplayCost = (int)(AmmountInStore * storeSellMultiplier);
-        }
-        public override void buyItem(int quantity){
-            System.Console.WriteLine("Input how many you would like to buy?");
-            string qty = System.Console.ReadLine();
-            int purchaseamt = 0;
-            if (Int32.TryParse(qty, out int numValue))
-            {
-            purchaseamt = numValue;
-            if(purchaseamt > ammount){
-                System.Console.WriteLine("Thats more than is in the store try again!");
-                Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
-            int currentload = Program.newGame.newPlayer.currentShip.currentCargo.Count;
-            int spaceAvailable = Program.newGame.newPlayer.currentShip.cargoSpace - currentload;
-            if(purchaseamt < spaceAvailable*inventorySpace){
-                while(purchaseamt >0) {
-                    if(purchaseamt > inventorySpace)
-                    {
-                    Program.newGame.newPlayer.currentShip.currentCargo.Add(new Cactus(inventorySpace));
-                    purchaseamt = purchaseamt - inventorySpace;
-                    } else {
-                        Program.newGame.newPlayer.currentShip.currentCargo.Add(new Cactus(purchaseamt));
-                        purchaseamt = purchaseamt - purchaseamt;
-                    }
-                }
-            }
-            else
-            {
-            Console.WriteLine($"Thats not a valid ammount try again");
-            Program.newGame.newPlayer.currentLocation.displayInfo();
-            }
+            id = 10;
         }
     }
 }
+    

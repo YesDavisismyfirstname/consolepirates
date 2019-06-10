@@ -28,12 +28,5 @@ namespace consolepirates.Models
             randomInventory();
         }
     }
-    public class EnemyNautilous : Nautilous
-    {
-        public EnemyNautilous(string name) : base (name)
-        {
-            randomEquipment(5,25,75,25);
-            randomInventory();
-        }
-    }
+    
 }

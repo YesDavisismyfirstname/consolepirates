@@ -21,16 +21,17 @@ namespace consolepirates
         {
             // CreateWebHostBuilder(args).Build().Run();
             Program.CreateGame();
-            
+
         }
         public static void CreateGame()
-        {   
+        {
             // availableLoot = new List<ILootable>(){
             //     Fern(1),
             //     new Orchid(1),
             // };
+            System.Console.Clear();
             Program.rand = new Random();
-            System.Console.Write( @"
+            System.Console.Write(@"
             ############################################################
             #                                                          #
             #                Welcome to Console Pirates!               #
@@ -43,29 +44,51 @@ namespace consolepirates
             Please provide your name:
             ");
             string name = System.Console.ReadLine();
-
+            System.Console.Clear();
             Console.Write($@"
             ############################################################
             #                                                          #
             #                   Welcome Captain!                       #
             #                                                          #
             #        You are the proud owner of a small Skipper!       #
+            #                             /|                           #
+            #                            / |                           #
+            #                           /__|__                         #
+            #                          \--------/                      #
+            #                  ~~~~~~~~~`~~~~~~'~~~~~~                 #
             #            Please provide a name for your ship:          #
             #                                                          #
             ############################################################
             ");
             string shipname = Console.ReadLine();
-            Console.Write($@"
-            ############################################################
-            #                                                          #
-            #                   Your Adventure Begins!                 #
-            #                                                          #
-            ############################################################
+
+            
+            Program.newGame = new Game(name, shipname);
+            
+            foreach (Location city in Program.world.availableLocations)
+            {
+                foreach (Location shop in city.availableLocations)
+                {
+                    shop.availableLocations.Add(city);
+                }
+                city.availableLocations.Add(Program.world);
+                city.actions.Add(new Travel(world.name));
+            }
+            Console.Clear();
+            Console.Write(world.locationArt);
+                        Console.Write($@"
+            #################################################################
+            #                                                               #
+            #            Welcome to AussieLand! The World awaits!           #
+            #                                                               #
+            #################################################################
             ");
-            newGame = new Game(name,shipname);
+            System.Console.WriteLine("Press any key to continue!");
+            Console.ReadLine();
+            world.actions[0].Act();
             newGame.newPlayer.currentLocation.displayInfo();
         }
-    
+
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
